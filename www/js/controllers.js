@@ -1,5 +1,5 @@
 var app = angular.module("movilapp", ['ngMaterial']);
-//var ip = "http://192.168.0.7:3000/server";
+//var ip = "http://192.168.0.15:80";
 var ip = window.localStorage.getItem("ipServer");
 
 //<<---------------------------------------------------------------------------------------------------------------------------------------->>
@@ -8,7 +8,7 @@ var ip = window.localStorage.getItem("ipServer");
 
 
 app.controller("infoController", ['$scope', '$filter', '$http', function($scope, $filter, $http){
-    $scope.infoExiste = false;
+    $scope.infoExiste=false;
     $scope.infoFormData={
         municipio:'',
         barrio:'',
@@ -31,6 +31,7 @@ app.controller("infoController", ['$scope', '$filter', '$http', function($scope,
     { municipio: "Palmira", comunaNum: ["1", "2", "3", "4", "5", "6","7", "8", "9","10", "11","13", "14", "15", "16"]},
     { municipio: "Cartago", comunaNum: ["1", "2", "3", "4", "5", "6","7"]}];
 
+    
     //<------------------------------------FUNCION PARA AGREGAR LA INFORMACION GENERAL DEL RECORRIDO ------------------------->
     $scope.agregarInfoGeneral = function(){
         if ($scope.infoFormData.municipio.municipio.trim()!='' && $scope.infoFormData.barrio.trim()!='' && $scope.infoFormData.comuna.trim()!='' && $scope.infoFormData.actividad.trim()!='') {}
@@ -61,7 +62,7 @@ app.controller("infoController", ['$scope', '$filter', '$http', function($scope,
 
     $scope.logout = function () {
         window.localStorage.clear();
-        window.location.replace("index.html");
+        window.location.replace("index.html")
     };
 
     $scope.initInfo = function(){
@@ -104,21 +105,10 @@ app.controller("infoController", ['$scope', '$filter', '$http', function($scope,
 //<<---------------------------------------------------------------------------------------------------------------------------------------->>
 app.controller("menuController", ['$scope','$filter', '$http', function($scope, $filter,$http){
     $scope.ipActual = ip;
-    $scope.cambioIP = function () {
-        if ($scope.ipServer.trim() != '') {
-            ip = $scope.ipServer;
-            window.localStorage.setItem("ipServer", ip);
-            $scope.ipActual = ip;
-            alert("Se cambió la IP del servidor a: " + ip);
-        } else {
-            alert("El campo esta vacio");
-        }
-    };
-
-    $scope.backNavigation = function () {
-        var previousPage = window.localStorage.getItem("previousPage");
-        window.location.replace(previousPage);
-    };
+    $scope.backNavigation = function() {
+        var previousPage = window.localStorage.getItem("previousPage");    
+        window.location.replace(previousPage);    
+    }
     $scope.fecha = $filter('date')(Date.now(), 'dd-MM-yyyy');
 
     $scope.init = function(){
@@ -143,7 +133,7 @@ app.controller("menuController", ['$scope','$filter', '$http', function($scope, 
 
     $scope.logout = function () {
         window.localStorage.clear();
-        window.location.replace("index.html");
+        window.location.replace("index.html")
     };
     //Variables del grafico
     var sumideros = Number(window.localStorage.getItem("numSumidero"));
@@ -156,7 +146,7 @@ app.controller("menuController", ['$scope','$filter', '$http', function($scope, 
       data: [
       {label: "Sumidero", value: sumideros},
       {label: "Vivienda", value: viviendas},
-      {label: "CDH", value: cdh}
+      {label: "CDH", value: cdh},
       ],
       colors: ['#ffcd28', '#5d6865', '#f93e04']
     }); //Cierra codigo de Donut.
@@ -247,6 +237,7 @@ app.controller("menuController", ['$scope','$filter', '$http', function($scope, 
 //<<-------------------------------------------- Controlador para ventana de Focos de infeccion-------------------------------------------->>
 //<<---------------------------------------------------------------------------------------------------------------------------------------->>
 app.controller("focoController", ['$scope', '$http', function ($scope, $http) {
+    $scope.ipActual = ip;
     $scope.showMap = false;//Mostrar mapa
     $scope.recientes = JSON.parse(localStorage.getItem("recentList"));
     $scope.municipios = [
@@ -259,7 +250,7 @@ app.controller("focoController", ['$scope', '$http', function ($scope, $http) {
         barrio: '',
         comuna: '',
         comunas: [],
-        actividad: ''
+        actividad: '',
 
     };
     //Tipo de sitio que visita
@@ -280,7 +271,7 @@ app.controller("focoController", ['$scope', '$http', function ($scope, $http) {
 
     $scope.toggleMap = function () {
         $scope.showMap = !$scope.showMap;
-    };
+    }
 
     $scope.changeView = function(nextPage,currentPage){
         window.localStorage.setItem("previousPage", currentPage);
@@ -289,7 +280,7 @@ app.controller("focoController", ['$scope', '$http', function ($scope, $http) {
 
     $scope.logout = function () {
         window.localStorage.clear();
-        window.location.replace("index.html");
+        window.location.replace("index.html")
     };
 
     $scope.modificarInfoGeneral = function () {        
@@ -314,16 +305,16 @@ app.controller("focoController", ['$scope', '$http', function ($scope, $http) {
 
 
     //Valores para el formulario de sumideros
-    $scope.sumideroForm = {
-        estadoSumidero: '',
-        larvasSumidero: '',
-        pupasSumidero: '',
-        tratadoSumidero: '',
-        insecticidaSumidero: '',
+    $scope.sumideroForm={
+        estadoSumidero:'',
+        larvasSumidero:'',
+        pupasSumidero:'',
+        tratadoSumidero:'',
+        insecticidaSumidero:'',
         cantInsecticidaSumidero: '',
-        arrayInsecticidas: JSON.parse(window.localStorage.getItem("insecticidas")),
-        ubicacionSumidero: ''
-    };
+        arrayInsecticidas:JSON.parse(window.localStorage.getItem("insecticidas")),
+        ubicacionSumidero:''
+    }
 
     $scope.agregarSumidero = function () {
         //Fecha para obtener la hora
@@ -350,8 +341,7 @@ app.controller("focoController", ['$scope', '$http', function ($scope, $http) {
                 idInfoGeneral: idInfo,
                 ubicacion: $scope.sumideroForm.ubicacionSumidero,
                 hora: fechaHoras.getHours() + 'h' + fechaHoras.getMinutes() + 'm'
-            };
-            console.log(jsonData);
+            };            
             $http.post(ip+'/webApi.php?val=addSumidero',jsonData).success(function(data) {
                 window.localStorage.setItem("previousPage", "menuTipos.html");
                 window.localStorage.setItem("numSumidero", sumideros+1);
@@ -384,26 +374,38 @@ app.controller("focoController", ['$scope', '$http', function ($scope, $http) {
             alert("No pueden haber campos vacios.");
         }    
     };
-    $scope.viviendaForm={
+    $scope.viviendaForm = {
+        nombre: '',
+        apellido: '',
+        cedula: '',
         habitantesCasa:0,
         clave:'',
-        depositos:'',
-        tieneAgua:false,
-        P:0,
-        L:0,
-        medidaTanque:0,
-        eliminados:0,
-        tratados:0,
-        larvicida:0,
+        depositos:[],
         ubicacionVivienda:''
     };
 
-    $scope.viviendaNoRenuente = function () {
-        return $scope.viviendaForm.clave != '' && $scope.viviendaForm.clave != 'Renuente';
+    $scope.viviendaNoRenuente = function(){
+        return $scope.viviendaForm.clave!='' && $scope.viviendaForm.clave!='Renuente';
+    }
+
+    $scope.agregarDeposito = function () {
+        var newIndex = $scope.viviendaForm.depositos.length;
+        var row = {
+            index: newIndex,
+            deposito: '',
+            tieneAgua: '',
+            P: '',
+            L:'',
+            medidaTanque: '',
+            eliminado: '',
+            tratado: '',
+            larvicida:'',
+        };
+        $scope.viviendaForm.depositos.push(row);
     };
 
-    $scope.medidaTanque = function () {
-        return $scope.viviendaForm.depositos == "Tanques bajos";
+    $scope.eliminarDeposito = function (index) {
+        $scope.viviendaForm.depositos.splice(index, 1);
     };
 
     $scope.agregarVivienda = function () {
@@ -422,19 +424,16 @@ app.controller("focoController", ['$scope', '$http', function ($scope, $http) {
                 tipo: $scope.tipo,
                 enviado: false,//si se envia no se agrega a la lista de sincronizar                
                 clave:$scope.viviendaForm.clave,
-                habitantes:$scope.viviendaForm.habitantesCasa,
-                deposito:$scope.viviendaForm.depositos,
-                medidaTanque:$scope.viviendaForm.medidaTanque,
-                tieneAgua:$scope.viviendaForm.tieneAgua,
-                P:$scope.viviendaForm.P,
-                L:$scope.viviendaForm.L,
-                eliminados:$scope.viviendaForm.eliminados,
-                tratados:$scope.viviendaForm.tratados,
-                larvicida:$scope.viviendaForm.larvicida,
-                idInfoGeneral: idInfo,                
+                habitantes: $scope.viviendaForm.habitantesCasa,
+                nombres: $scope.viviendaForm.nombre,
+                apellidos: $scope.viviendaForm.apellido,
+                cedula: $scope.viviendaForm.cedula,
+                depositos:$scope.viviendaForm.depositos,
+                idInfoGeneral: idInfo,
                 ubicacion: $scope.viviendaForm.ubicacionVivienda,
                 hora: fechaHoras.getHours() + 'h' + fechaHoras.getMinutes()+'m'
             };
+            console.log(jsonData);
             $http.post(ip + '/webApi.php?val=addVivienda', jsonData).success(function (data) {                
                 window.localStorage.setItem("previousPage", "menuTipos.html");
                 window.localStorage.setItem("numVivienda", viviendas+1);
@@ -461,7 +460,7 @@ app.controller("focoController", ['$scope', '$http', function ($scope, $http) {
             }
             
         }else{
-            alert("Revisa que ingresaste la clave y tu ubicación");
+            alert("Revisa que ingresaste la clave y tu ubicación.");
         }
     };
     //Informacion CDH
@@ -470,17 +469,17 @@ app.controller("focoController", ['$scope', '$http', function ($scope, $http) {
         apellido: '',
         cedula: '',
         rs: '',
-        focosEncontrados: [],
-        focosPotenciales: [],
+        focosEncontrados:[],
+        focosPotenciales:[],
         //centros hospitalarios y batallon
         toldillos: [],
         observaciones: '',
         plazo: 0,
-        ubicacionCDH: '',
+        ubicacionCDH:'',
         tipoCDH: '',
-        plazo: 0
-
-    };
+        plazo:0
+        
+    }
 
     $scope.agregarCDH = function(){
         //Fecha usada para obtener la hora
@@ -571,7 +570,7 @@ app.controller("focoController", ['$scope', '$http', function ($scope, $http) {
             draggable: true
         };
 
-        var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+        var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);;
 
         var directionsService = new google.maps.DirectionsService();
 

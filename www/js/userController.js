@@ -1,7 +1,7 @@
 var app = angular.module('movilapp', []);
 //Ip publica
 //var ip = "http://181.53.57.112:3000/server";
-var ip = "http://192.168.0.7:3000/server";
+var ip = "http://192.168.0.7:3000";
 
 app.controller("inicioController", ['$scope', '$http', function($scope, $http){
     $scope.existe = "";
@@ -12,6 +12,8 @@ app.controller("inicioController", ['$scope', '$http', function($scope, $http){
     $scope.changeView = function(view){
         window.location.replace(view);            
     };
+
+    //-----------------------Cambio de IP ---------------------------------
     window.localStorage.setItem("ipServer", ip);
     $scope.cambioIP = function () {
         if ($scope.ipServer.trim() != '') {
@@ -22,6 +24,7 @@ app.controller("inicioController", ['$scope', '$http', function($scope, $http){
             alert("El campo esta vacio");
         }
     };
+    //--------------------- FIN cambio IP -----------------------------------
 
 //<-----------------------FUNCION PARA INICIAR SESION ------------------------->
     $scope.login = function () {
@@ -47,11 +50,7 @@ app.controller("inicioController", ['$scope', '$http', function($scope, $http){
 
 
     //<-----------------------FUNCION PARA REGISTRAR UN USUARIO NUEVO ------------------------->
-    $scope.registro = function () {
-        if ($scope.ipServer.trim() != '') {
-            ip = $scope.ipServer;
-        }
-
+    $scope.registro = function(){
         $http.post(ip+'/webApi.php?val=registroUsuario',{
             cedula: $scope.cedula,
             nombres: $scope.nombres,
