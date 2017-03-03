@@ -12,7 +12,6 @@ app.controller("inicioController", ['$scope', '$http', function($scope, $http){
     $scope.changeView = function(view){
         window.location.replace(view);            
     };
-
     //-----------------------Cambio de IP ---------------------------------
     window.localStorage.setItem("ipServer", ip);
     $scope.cambioIP = function () {
