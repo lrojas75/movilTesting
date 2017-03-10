@@ -108,19 +108,6 @@ app.controller("infoController", ['$scope', '$filter', '$http', '$sce', function
 //<<-------------------------------------------- Controlador para ventana del Menu principal-------------------------------------------->>
 //<<---------------------------------------------------------------------------------------------------------------------------------------->>
 app.controller("menuController", ['$scope','$filter', '$http','$sce', function($scope, $filter,$http,$sce){    
-    //-----------------------Cambio de IP ---------------------------------
-    window.localStorage.setItem("ipServer", ip);
-    $scope.cambioIP = function () {
-        if ($scope.ipServer.trim() != '') {
-            ip = $scope.ipServer;
-            window.localStorage.setItem("ipServer", ip);
-            alert("Se cambió la IP del servidor a: " + ip);
-        } else {
-            alert("El campo esta vacio");
-        }
-    };
-    //--------------------- FIN cambio IP -----------------------------------
-
     $scope.modalMessage = '';
     $scope.hayConexion = false;
     $scope.recientes = JSON.parse(localStorage.getItem("recentList"));
