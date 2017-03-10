@@ -1,6 +1,6 @@
 var app = angular.module('movilapp', []);
 //Ip publica
-var ip = "http://181.53.57.112:3000/server";
+var ip = "http://181.49.80.163:3000/server";
 //var ip = "http://192.168.0.15";
 
 app.controller("inicioController", ['$scope', '$http', function($scope, $http){
