@@ -113,7 +113,7 @@ app.controller("menuController", ['$scope', '$filter', '$http', '$sce', function
     window.localStorage.setItem("ipServer", ip);
     $scope.cambioIP = function () {
         if ($scope.ipServer.trim() != '') {
-            ip = "http://"+$scope.ipServer;
+            ip = $scope.ipServer;
             window.localStorage.setItem("ipServer", ip);
             alert("Se cambió la IP del servidor a: " + ip);
         } else {
@@ -316,7 +316,7 @@ app.controller("focoController", ['$scope', '$http', '$sce', function ($scope, $
     $scope.municipios = [
         { municipio: "Cali", comunaNum: ["1", "2", "3", "4", "5", "6","7", "8", "9","10", "11","13", "17","19", "20", "21", "22"]},
         { municipio: "Palmira", comunaNum: ["1", "2", "3", "4", "5", "6","7", "8", "9","10", "11","13", "14", "15", "16"]},
-        { municipio: "Cartago", comunaNum: ["1", "2", "3", "4", "5", "6","7"]}
+        { municipio: "Cartago", comunaNum: ["1", "2", "3", "4", "5", "6","7"]},
         { municipio: "Yumbo", comunaNum: ["1", "2", "3", "4"]}];
     //Valores del formulario de modificar info
     $scope.editarInfo = {

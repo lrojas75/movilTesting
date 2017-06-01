@@ -26,7 +26,7 @@ app.controller("inicioController", ['$scope', '$http', function($scope, $http){
     window.localStorage.setItem("ipServer", ip);
     $scope.cambioIP = function () {
         if ($scope.ipServer.trim() != '') {
-            ip = "http://"+$scope.ipServer;
+            ip = $scope.ipServer;
             window.localStorage.setItem("ipServer", ip);
             alert("Se cambió la IP del servidor a: " + ip);
         } else {
